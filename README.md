@@ -108,8 +108,5 @@ Behavior reflects noisy but adaptive biological learning, rather than clean opti
 
 The final 4×2 weight matrix reveals how each sensory input influences the two actions.
 
-Insert your image:
-
-```markdown
 <img width="1400" height="600" alt="Figure_4" src="https://github.com/user-attachments/assets/2e9624f7-7a7e-457f-b9ee-82db44bc9660" />
 
