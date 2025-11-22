@@ -111,5 +111,5 @@ The final 4×2 weight matrix reveals how each sensory input influences the two a
 Insert your image:
 
 ```markdown
-![Behavior-and-Brain](results/behavior_and_brain.png)<img width="1400" height="600" alt="Figure_4" src="https://github.com/user-attachments/assets/2e9624f7-7a7e-457f-b9ee-82db44bc9660" />
+<img width="1400" height="600" alt="Figure_4" src="https://github.com/user-attachments/assets/2e9624f7-7a7e-457f-b9ee-82db44bc9660" />
 
