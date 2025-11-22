@@ -1,23 +1,24 @@
 # 🧠 Bio-Inspired Reinforcement Learning  
-## Dopamine-Modulated Synapses, Membrane Dynamics & Sleep-Driven Consolidation  
-*A research-notebook style experiment inspired by computational neuroscience.*
+## Dopamine-Modulated Synapses, Membrane Dynamics & Sleep-Based Consolidation
+
+*A computational neuroscience–inspired CartPole agent built without neural networks, gradients, or backpropagation — only biologically plausible learning rules.*
 
 ---
 
 ## 🌱 Motivation
 
-This project explores a central question in computational neuroscience:
+This project explores a fundamental question in computational neuroscience:
 
-**Can an agent learn meaningful behavior using only biologically plausible mechanisms—without gradients, backpropagation, or deep networks?**
+**Can meaningful behavior emerge from simple biological learning rules alone?**
 
-Instead of artificial neural networks, this implementation follows principles drawn from real neural systems:
+Instead of artificial neural networks, the agent relies on mechanisms inspired by the brain:
 
-- Action selection through **membrane potentials**  
-- Learning via **dopamine-modulated prediction errors**  
-- Local synaptic plasticity inspired by **Hebbian/TD rules**  
-- Night-time consolidation through **sleep-based synaptic pruning**  
+- Membrane-potential–based action selection  
+- Dopamine-like reward prediction errors  
+- Local Hebbian/TD synaptic updates  
+- Sleep-based synaptic downscaling for stability  
 
-The result is a lightweight yet interpretable agent capable of balancing the CartPole environment using minimal but biologically grounded computations.
+The goal is not algorithmic performance, but **interpretability** and **biological realism** in reinforcement learning.
 
 ---
 
@@ -25,92 +26,90 @@ The result is a lightweight yet interpretable agent capable of balancing the Car
 
 ### **1. Membrane-Potential Action Selection**
 
-Each action corresponds to a motor neuron receiving weighted sensory inputs:
+The agent uses a small **4×2 synaptic weight matrix** to map sensory inputs to motor outputs.
 
-\[
-V_{a} = s \cdot W_{:,a}
-\]
+Membrane potential for each action:
 
-Where:  
-- \( s \) — 4-dimensional state (position, velocity, angle, angular velocity)  
-- \( W \) — synaptic weight matrix (4×2)  
-- \( V_a \) — membrane potential for action \(a\)
+$$
+V_a = s \cdot W_{:,a}
+$$
 
-The chosen action:
+Action is chosen through a winner-take-all mechanism:
 
-\[
+$$
 a = \arg\max(V_a)
-\]
+$$
 
-This approximates a **winner-take-all** mechanism similar to basal ganglia circuits.
+This mirrors competitive action selection in basal ganglia circuits.
 
 ---
 
 ### **2. Dopamine as Temporal-Difference Error**
 
-Learning is driven by a dopamine-like prediction signal:
+Learning is driven by a dopamine-like scalar signal:
 
-\[
+$$
 \delta = r + \gamma \max(V') - V_a
-\]
+$$
 
-Weights update only for synapses linked to the chosen action:
+Synaptic updates occur only on the active input-to-action pathway:
 
-\[
+$$
 W_{i,a} \leftarrow W_{i,a} + \alpha \, \delta \, s_i
-\]
+$$
 
-This is a simplified form of:
-
-- Dopamine-modulated Hebbian learning  
-- Temporal Difference (TD) learning  
-
-It captures the interaction between **local synaptic eligibility** and **global reward feedback**, widely observed in biological systems.
+This combination of **local synaptic eligibility** + **global dopamine modulation** reflects key biological credit-assignment principles.
 
 ---
 
-### **3. Sleep-Based Synaptic Consolidation**
+### **3. Sleep-Based Synaptic Pruning**
 
-Inspired by Tononi & Cirelli’s *Synaptic Homeostasis Hypothesis (SHY)*:
+Every 100 episodes, the agent enters a simulated “sleep” stage.
 
-Every 100 episodes, the agent “sleeps”, pruning weak synapses:
+Weak synapses are pruned:
 
-\[
+$$
 |W_{i,j}| < \epsilon \Rightarrow W_{i,j} = 0
-\]
+$$
 
-This maintains network stability, energy efficiency, and prevents uncontrolled synaptic growth.
+Inspired by the **Synaptic Homeostasis Hypothesis (SHY)**, this prevents weight explosion, reduces noise, and supports long-term stability.
 
 ---
 
-## 🚀 Training Procedure
+## 🚀 Training Overview
 
-- **Environment:** Gymnasium CartPole-v1  
-- **Policy:** membrane potentials + winner-take-all  
-- **Learning:** dopamine-modulated TD error  
-- **Regularization:** sleep-driven synaptic pruning  
-- **Stability:** weight clipping (-5 to +5)  
+- Environment: **Gymnasium CartPole-v1**  
+- Learning: dopamine-modulated TD update  
+- Action selection: membrane potentials + argmax  
+- Regularization: synaptic pruning during sleep  
+- Stability: weight clipping between –5 and +5  
 
-The system is fully interpretable and computationally lightweight—no GPU required.
+This system is:
+- Lightweight  
+- Fully interpretable  
+- CPU-friendly (no GPU required)  
+- Neuroscience-inspired rather than algorithm-driven  
 
 ---
 
 ## 📊 Results
 
-### **1. Behavioral Performance**
+### **Behavioral Performance**
 
-- Grey: raw trial rewards  
-- Blue: smoothed learning curve  
-- Green dashed: success threshold  
-- Purple vertical lines: sleep cycles  
+The learning curve shows:
+- Raw episode returns (grey)  
+- Smoothed reward trajectory (blue)  
+- Success threshold (green dashed)  
+- Sleep cycles (purple vertical lines)  
 
-Learning remains noisy yet adaptive, similar to biological learning rather than engineered optimization.
+Behavior reflects noisy but adaptive biological learning, rather than clean optimization.
 
-### **2. Synaptic Connectivity Map**
+### **Synaptic Connectivity “Brain Map”**
 
-A heatmap of the final 4×2 synaptic weight matrix:
+The final 4×2 weight matrix reveals how each sensory input influences the two actions.
 
-- **Inputs:** Position, Velocity, Angle, Angular Velocity  
-- **Actions:** Push Left, Push Right  
+Insert your image:
 
-This matrix represents the agent’s “brain”.
+```markdown
+![Behavior-and-Brain](results/behavior_and_brain.png)<img width="1400" height="600" alt="Figure_4" src="https://github.com/user-attachments/assets/2e9624f7-7a7e-457f-b9ee-82db44bc9660" />
+
